@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/bg_severity_high.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/Dangerred" />
+    <corners android:radius="8dp" />
+</shape>
+
+    <!-- res/drawable/bg_severity_medium.xml -->
