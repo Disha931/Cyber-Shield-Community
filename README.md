@@ -1,112 +1,176 @@
-# CyberShield Community
+# 🛡️ CyberShield Community
 
-> **An Educational Cyber Safety Ecosystem**
+**Learn • Detect • Protect • Report**
 
-## 🛡️ About the Project
-**CyberShield Community** is a native Android application developed as a Final Year B.Tech Major Project. The platform is designed to bridge the gap between cybersecurity awareness and real-world application. It provides an all-in-one ecosystem where users can learn about digital threats, analyze suspicious URLs, generate secure passwords, report cyber incidents, and engage with a community of safety-conscious users.
-
-## 🎯 Problem Statement
-As digital transformation accelerates, everyday smartphone users are increasingly targeted by sophisticated cyber threats such as phishing, social engineering, and malicious links. Most users lack accessible cybersecurity education, proactive tools to detect simple scams, and a centralized platform to report incidents and warn their community.
-
-## 💡 Solution
-CyberShield Community addresses this vulnerability by combining education, detection, and community reporting into a single Android application. By providing actionable tools (like URL checkers and password analyzers) alongside interactive learning modules, the application empowers users to transition from vulnerable targets to proactive digital defenders.
+An Android application built to make cybersecurity awareness accessible, practical, and community-driven. CyberShield Community combines real-time threat detection tools, hands-on security utilities, and a shared reporting network into a single app — helping users build safer digital habits and respond quickly when something goes wrong.
 
 ---
 
-## 🚀 Features & Implementation Status
+## 📱 About the Project
 
-### Authentication
-*   ✅ **Splash Screen:** Routes users dynamically based on Firebase Auth session state.
-*   ✅ **Registration:** Secure account creation with full name, email, password, and input validation.
-*   ✅ **Login:** Email/password authentication with "Forgot Password" reset functionality.
+Cybercrime awareness is often scattered — one app for password checking, another for scam reporting, another for education. CyberShield Community brings these into one platform, structured around four core pillars:
 
-### Dashboard & Navigation
-*   ✅ **Dashboard:** Personalized greeting, recent threat alerts, cyber news, and daily security tips.
-*   ✅ **Bottom Navigation:** Seamless routing between Learn, Detect, Protect, Report, and Community modules.
+- **Learn** — build cyber-hygiene knowledge through structured awareness topics
+- **Detect** — analyze links, QR codes, messages, and screenshots for scam indicators
+- **Protect** — strengthen and manage your digital identity
+- **Report** — file cyber incidents and see community-wide threat trends
 
-### Learn
-*   ✅ **Cybersecurity Topics:** 6 structured learning modules.
-*   ✅ **Progress Tracking:** Real-time completion counter synced with Firebase.
-*   🔵 **Quizzes & Digital Certificates:** Planned for future enhancement.
-
-### Detect
-*   ✅ **URL Checker:** Analyzes and validates inputted URLs for potential risks.
-*   🔵 **QR Code / Screenshot / AI Scam Scanner:** Planned for future integration with AI APIs.
-
-### Protect
-*   ✅ **Password Analyzer:** Evaluates the strength and complexity of user-provided passwords.
-*   ✅ **Password Generator:** Creates highly secure, randomized passwords on demand.
-*   🔵 **Password Vault & Emergency SOS:** Planned for future enhancement.
-
-### Report
-*   ✅ **Incident Reporting:** Form-based submission allowing users to categorize and describe cyber incidents.
-*   ✅ **Report History:** Users can view a log of their previously submitted reports retrieved from Firebase.
-
-### Community
-*   ✅ **Shared Feed:** A live community board where users can create posts.
-*   ✅ **Categorization & Engagement:** Support for category tags and Like/Unlike functionality.
-
-### Profile
-*   ✅ **User Stats:** Displays name, email, completed topics, submitted reports, community posts, and current Security Score.
-*   ✅ **Session Management:** Secure logout functionality.
+This was built as a B.Tech Major Project, with every feature backed by real functionality — not static mockups.
 
 ---
 
-## 🧠 Security Score
+## ✨ Features
 
-The **Dashboard Security Score** is a dynamic, gamified metric representing a user's cybersecurity awareness and platform engagement. 
+### 🎓 Learn
+- 6 structured cybersecurity awareness topics (Phishing, Passwords, Privacy, Malware, Web Security, and more)
+- Persistent progress tracking synced to Firebase
+- **Digital Certificate** awarded on completing all topics
 
-**Calculation Logic:**
-The score is calculated locally based on the user's authenticated activities stored in the Firebase Realtime Database. It dynamically scales based on:
-1.  **Completed Learning Topics** (Positive weight per topic finished)
-2.  **Submitted Reports** (Positive weight per community incident reported)
+### 🔍 Detect
+- **URL Checker** — heuristic risk analysis (HTTPS check, IP-based URLs, shorteners, suspicious TLDs, phishing patterns)
+- **QR Code Scanner** — real-time camera scanning (ZXing) with built-in link safety verdict
+- **AI Scam Detector** — paste any suspicious message for pattern-based scam analysis
+- **SMS Phishing Detector** — scans the device inbox for phishing indicators
+- **Screenshot Scanner** — on-device OCR (ML Kit) extracts text from images and runs the same scam analysis
+- **Threat Heatmap** — live, community-wide breakdown of reported incident types
 
-*(Note: The exact integer weights are defined dynamically in the Java logic to cap at a maximum score of 100).*
+### 🔒 Protect
+- **Password Analyzer** — real-time strength scoring with actionable suggestions
+- **Password Generator** — customizable length and character sets, powered by `SecureRandom`
+- **Password Vault** — encrypted, on-device storage (`EncryptedSharedPreferences`) — vault data never touches the cloud
+- **Emergency SOS** — one-tap access to India's Cyber Crime Helpline (1930), the official reporting portal, and a saved personal emergency contact
+
+### 📢 Report
+- Guided incident reporting form with type + description
+- Personal report history with status tracking
+- Anonymized data feeds the community Threat Heatmap
+
+### 👥 Community
+- Live, shared discussion feed (real-time Firebase sync)
+- Categorized posts (Scam Alert, Question, Tip)
+- Like/unlike with per-user tracking
+
+### 👤 Profile & Dashboard
+- Firebase-authenticated user profile with live activity stats
+- Dynamic Security Score, calculated from real Learn + Report activity
+- Dynamic Cyber News feed (admin-managed via Firebase Console)
+- Secure logout with full session/back-stack clearing
 
 ---
 
-## 🔄 User Journey
+## 🛠️ Tech Stack
 
-```text
-[ Install App ]
-      ↓
-[ Register / Login via Firebase Auth ]
-      ↓
-[ Dashboard ] (Views Security Score & News)
-      ↓
-[ Choose Module ]
-  ├── 📖 Learn (Read topics -> Increases Score)
-  ├── 🔍 Detect (Scan URLs for safety)
-  ├── 🔐 Protect (Analyze/Generate Passwords)
-  ├── 📝 Report (Log an incident -> Increases Score)
-  └── 🌐 Community (Share and read threat posts)
-      ↓
-[ Profile Updates ] (Score increases, History saved)
-      ↓
-[ Cyber-Aware User ]
+| Layer | Technology |
+|---|---|
+| Language | Java |
+| UI | XML, Material Components |
+| Architecture | Single-Activity + Fragments |
+| Auth & Database | Firebase Authentication, Firebase Realtime Database |
+| Local Secure Storage | Jetpack Security (`EncryptedSharedPreferences`) |
+| QR Scanning | ZXing (`zxing-android-embedded`) |
+| OCR / Text Recognition | Google ML Kit Text Recognition |
+| Design | Custom dark cybersecurity theme, Material CardViews |
 
-//PROJECT STRUCTURE
-CyberShield-Community/
-│
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/example/cybershield/
-│   │   │   │   ├── activities/     # Splash, Login, Register, MainActivity
-│   │   │   │   ├── fragments/      # Learn, Detect, Protect, Report, Community, Profile
-│   │   │   │   ├── models/         # User, Post, Report data classes
-│   │   │   │   └── adapters/       # RecyclerView adapters for Community
-│   │   │   └── res/
-│   │   │       ├── layout/         # XML UI files
-│   │   │       ├── menu/           # Bottom navigation menu
-│   │   │       └── values/         # Colors, strings, themes
-│   └── build.gradle                # App-level dependencies
-│
-├── build.gradle                    # Project-level dependencies
-├── README.md
-└── .gitignore
+---
 
-Disclaimer
-CyberShield Community is developed strictly as an educational project for a B.Tech university curriculum.
-The tools provided (such as the URL checker and password analyzer) rely on basic validation rules and should not be treated as guaranteed, professional-grade security analysis.
- Always use standard security software and common sense when navigating the web.
+## 🏗️ Architecture
+
+The app follows a **single-Activity, multi-Fragment** architecture:
+
+```
+Dashboard (Activity)
+ ├── fragment_learn
+ ├── fragment_Detect
+ │     ├── Fragment_UrlChecker
+ │     ├── Fragment_QrScanner
+ │     ├── Fragment_ScamDetector
+ │     ├── Fragment_SmsDetector
+ │     ├── Fragment_ScreenshotScanner
+ │     └── Fragment_ThreatHeatmap
+ ├── Fragment_Protect
+ │     ├── Fragment_PasswordAnalyzer
+ │     ├── Fragment_PasswordGenerator
+ │     ├── Fragment_PasswordVault
+ │     └── Fragment_EmergencySos
+ ├── fragment_Report
+ ├── Fragment_Community
+ └── fragment_Profile
+       └── Fragment_Certificate
+```
+
+All fragments swap into a shared `FrameLayout` container, with the bottom navigation and top bar persisting across screens — avoiding full-screen transitions for every action.
+
+### Firebase Data Structure
+
+```
+Users/
+ └── {uid}/
+      ├── name, email
+      ├── learningProgress/ {topicKey: true/false}
+      ├── myReports/ {autoId: {type, description, status, timestamp}}
+      └── certificate/ {earned, dateEarned}
+
+CommunityPosts/
+ └── {autoId}/ {authorUid, authorName, category, text, timestamp, likeCount, likedBy}
+
+ThreatReports/          (anonymized — no user ID, no description)
+ └── {autoId}/ {type, timestamp}
+
+CyberNews/               (admin-managed via Firebase Console)
+ └── {autoId}/ {title, description, date}
+```
+
+---
+
+## 🔐 Security & Privacy Notes
+
+- **Password Vault data is never sent to Firebase** — it's encrypted and stored only on-device via the Android Keystore, specifically because it holds the user's actual passwords to other accounts.
+- **Threat Heatmap and Community data are intentionally anonymized/public** — no personal report descriptions or user identifiers are exposed in shared nodes.
+- SMS and camera permissions are requested at runtime and only used for their stated feature (SMS Phishing Detector, QR Scanner) — no background access.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Android Studio (latest stable)
+- A Firebase project with:
+  - Authentication (Email/Password) enabled
+  - Realtime Database enabled
+- Your own `google-services.json` placed in `app/`
+
+### Setup
+1. Clone the repository
+   ```bash
+   git clone https://github.com/<your-username>/cybershield-community.git
+   ```
+2. Open in Android Studio
+3. Add your `google-services.json` to the `app/` directory
+4. Sync Gradle
+5. Run on an emulator or physical device (a real device is recommended for QR Scanning, SMS Detection, and Screenshot Scanner testing)
+
+---
+
+## 📸 Screenshots
+
+*(Add your app screenshots here — Dashboard, Learn, Detect tools, Protect tools, Community, Profile)*
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Leaderboard (rank users by Security Score)
+- [ ] Dynamic Recent Threat Alerts on Dashboard
+- [ ] Push Notifications
+- [ ] Full comment threads on Community posts
+
+---
+
+
+---
+
+## 🙋 Author
+
+Built by **[Disha Tomar]** as a B.Tech Major Project.
+
+*Learn. Detect. Protect. Report.*
