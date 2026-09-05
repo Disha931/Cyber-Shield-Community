@@ -142,7 +142,7 @@ CyberNews/               (admin-managed via Firebase Console)
 ### Setup
 1. Clone the repository
    ```bash
-   git clone https://github.com/<your-username>/cybershield-community.git
+   git clone https://github.com/<Disha931>/cybershield-community.git
    ```
 2. Open in Android Studio
 3. Add your `google-services.json` to the `app/` directory
