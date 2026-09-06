@@ -84,7 +84,7 @@ public class fragment_Report extends Fragment {
 
     private void submitReport() {
         if (myReportsRef == null) {
-            Toast.makeText(getContext(), "You must be logged in to submit a report", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "You must be logged in to submit a report", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -92,27 +92,35 @@ public class fragment_Report extends Fragment {
         String description = etReportDescription.getText().toString().trim();
 
         if (description.isEmpty()) {
-            Toast.makeText(getContext(), "Please describe what happened", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Please describe what happened", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String reportId = myReportsRef.push().getKey();
         if (reportId == null) {
-            Toast.makeText(getContext(), "Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         long timestamp = System.currentTimeMillis();
 
+        // 🔵 NEW — anonymized copy for the community-wide Threat Heatmap
+        DatabaseReference threatReportsRef = FirebaseDatabase.getInstance().getReference("ThreatReports");
+        String threatReportId = threatReportsRef.push().getKey();
+        if (threatReportId != null) {
+            ThreatReportEntry threatEntry = new ThreatReportEntry(type, timestamp);
+            threatReportsRef.child(threatReportId).setValue(threatEntry);
+        }
+
         ReportItem report = new ReportItem(type, description, "Submitted", timestamp);
         myReportsRef.child(reportId).setValue(report)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(getContext(), "Report submitted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Report submitted successfully", Toast.LENGTH_SHORT).show();
                     etReportDescription.setText("");
                     loadMyReports(); // refresh the list to show the new report
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(getContext(), "Failed to submit: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        Toast.makeText(requireContext(), "Failed to submit: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void loadMyReports() {
@@ -149,7 +157,7 @@ public class fragment_Report extends Fragment {
     }
 
     private void addReportRow(ReportItem report) {
-        View row = LayoutInflater.from(getContext()).inflate(R.layout.item_report, llMyReports, false);
+        View row = LayoutInflater.from(requireContext()).inflate(R.layout.item_report, llMyReports, false);
 
         TextView tvType = row.findViewById(R.id.tvReportType);
         TextView tvStatus = row.findViewById(R.id.tvReportStatus);
@@ -180,6 +188,19 @@ public class fragment_Report extends Fragment {
             this.type = type;
             this.description = description;
             this.status = status;
+            this.timestamp = timestamp;
+        }
+    }
+
+    // 🔵 NEW — Anonymized entry for the shared Threat Heatmap — no description, no user ID
+    public static class ThreatReportEntry {
+        public String type;
+        public long timestamp;
+
+        public ThreatReportEntry() {} // required by Firebase
+
+        public ThreatReportEntry(String type, long timestamp) {
+            this.type = type;
             this.timestamp = timestamp;
         }
     }

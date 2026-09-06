@@ -86,7 +86,7 @@ public class Fragment_PasswordGenerator extends Fragment {
         if (checkSpecial.isChecked()) charPool.append(SPECIAL_CHARS);
 
         if (charPool.length() == 0) {
-            Toast.makeText(getContext(), "Select at least one character type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Select at least one character type", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -104,7 +104,7 @@ public class Fragment_PasswordGenerator extends Fragment {
 
     private void copyToClipboard() {
         if (currentPassword.isEmpty()) {
-            Toast.makeText(getContext(), "Generate a password first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Generate a password first", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -112,6 +112,6 @@ public class Fragment_PasswordGenerator extends Fragment {
         ClipData clip = ClipData.newPlainText("Generated Password", currentPassword);
         clipboard.setPrimaryClip(clip);
 
-        Toast.makeText(getContext(), "Password copied to clipboard", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Password copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 }

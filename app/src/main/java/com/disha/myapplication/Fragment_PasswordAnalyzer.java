@@ -104,23 +104,23 @@ public class Fragment_PasswordAnalyzer extends Fragment {
     private void updateCheckRow(TextView view, String label, boolean passed) {
         if (passed) {
             view.setText("✓ " + label);
-            view.setTextColor(getResources().getColor(R.color.Safegreen));
+            view.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.Safegreen));
         } else {
             view.setText("✗ " + label);
-            view.setTextColor(getResources().getColor(R.color.Dangerred));
+            view.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.Dangerred));
         }
     }
 
     private void updateStrengthLabel(int score) {
         if (score <= 40) {
             tvStrengthLabel.setText("⚠ WEAK Strength");
-            tvStrengthLabel.setTextColor(getResources().getColor(R.color.Dangerred));
+            tvStrengthLabel.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.Dangerred));
         } else if (score <= 80) {
             tvStrengthLabel.setText("⚠ MEDIUM Strength");
-            tvStrengthLabel.setTextColor(getResources().getColor(R.color.accent));
+            tvStrengthLabel.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.accent));
         } else {
             tvStrengthLabel.setText("✓ STRONG Strength");
-            tvStrengthLabel.setTextColor(getResources().getColor(R.color.Safegreen));
+            tvStrengthLabel.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.Safegreen));
         }
     }
 

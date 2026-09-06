@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.activity.ComponentActivity;
 
 import com.disha.myapplication.R;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends ComponentActivity {
 
@@ -23,15 +23,14 @@ public class Login extends ComponentActivity {
     private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);

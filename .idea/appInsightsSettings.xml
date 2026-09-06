@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.disha.myapplication" />
+                  <option name="mobileSdkAppId" value="1:188269032588:android:cb6842a393b3819c9df7a9" />
+                  <option name="projectId" value="cybershield-community" />
+                  <option name="projectNumber" value="188269032588" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

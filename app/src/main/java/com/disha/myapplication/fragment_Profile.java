@@ -25,7 +25,8 @@ public class fragment_Profile extends Fragment {
 
     private TextView tvProfileName;
     private TextView tvProfileEmail;
-
+    private CardView cardCertificate;
+    private TextView tvCertificateStatus;
     private TextView tvStatTopics;
     private TextView tvStatReports;
     private TextView tvStatPosts;
@@ -54,6 +55,8 @@ public class fragment_Profile extends Fragment {
         tvStatReports = view.findViewById(R.id.tvStatReports);
         tvStatPosts = view.findViewById(R.id.tvStatPosts);
         tvStatSecurityScore = view.findViewById(R.id.tvStatSecurityScore);
+        cardCertificate = view.findViewById(R.id.cardCertificate);
+        tvCertificateStatus = view.findViewById(R.id.tvCertificateStatus);
 
         cardLogout = view.findViewById(R.id.cardLogout); // 🔵 NEW
 
@@ -68,6 +71,8 @@ public class fragment_Profile extends Fragment {
         loadTopicsCompleted();
         loadReportsSubmitted();
         loadCommunityPostsCount();
+        loadCertificateCardStatus();
+
 
         cardLogout.setOnClickListener(v -> showLogoutConfirmation()); // 🔵 NEW
     }
@@ -143,6 +148,33 @@ public class fragment_Profile extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 tvStatReports.setText("0");
+            }
+        });
+    }
+    private void loadCertificateCardStatus() {
+        if (currentUid == null) return;
+
+        DatabaseReference certRef = FirebaseDatabase.getInstance()
+                .getReference("Users").child(currentUid).child("certificate").child("earned");
+
+        certRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean earned = snapshot.getValue(Boolean.class);
+
+                if (Boolean.TRUE.equals(earned)) {
+                    tvCertificateStatus.setText("🎓 View Certificate");
+                    cardCertificate.setOnClickListener(v ->
+                            ((Dashboard) requireActivity()).openFragment(new Fragment_Certificate(), "certificate"));
+                } else {
+                    tvCertificateStatus.setText("Complete all Learn topics to earn your certificate");
+                    cardCertificate.setOnClickListener(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // leave default locked state
             }
         });
     }

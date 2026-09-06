@@ -34,11 +34,16 @@ import androidx.fragment.app.Fragment;
             CardView cardThreatHeatmap = view.findViewById(R.id.cardThreatHeatmap);
 
             cardUrlChecker.setOnClickListener(v ->
-                    ((Dashboard) requireActivity()).openFragment(new Fragment_UrlChecker(), "url_checker"));            cardQrScanner.setOnClickListener(v -> showComingSoon("QR Code Scanner"));
-            cardScamDetector.setOnClickListener(v -> showComingSoon("AI Scam Detector"));
-            cardScreenshotScanner.setOnClickListener(v -> showComingSoon("Screenshot Scanner"));
-            cardSmsDetector.setOnClickListener(v -> showComingSoon("SMS Phishing Detector"));
-            cardThreatHeatmap.setOnClickListener(v -> showComingSoon("Threat Heatmap"));
+                    ((Dashboard) requireActivity()).openFragment(new Fragment_UrlChecker(), "url_checker"));
+            cardThreatHeatmap.setOnClickListener(v ->
+                    ((Dashboard) requireActivity()).openFragment(new Fragment_ThreatHeatmap(), "threat_heatmap"));
+            cardQrScanner.setOnClickListener(v -> showComingSoon("QR Code Scanner"));
+            cardScamDetector.setOnClickListener(v ->
+                    ((Dashboard) requireActivity()).openFragment(new Fragment_ScamDetector(), "scam_detector"));
+            cardSmsDetector.setOnClickListener(v ->
+                    ((Dashboard) requireActivity()).openFragment(new Fragment_SmsDetector(), "sms_detector"));
+            cardScreenshotScanner.setOnClickListener(v ->
+                    ((Dashboard) requireActivity()).openFragment(new Fragment_ScreenshotScanner(), "screenshot_scanner"));
         }
 
         private void showComingSoon(String tool) {

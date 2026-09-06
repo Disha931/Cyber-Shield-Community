@@ -37,8 +37,10 @@ public class Fragment_Protect extends Fragment {
 
         cardPasswordGenerator.setOnClickListener(v ->
                 ((Dashboard) requireActivity()).openFragment(new Fragment_PasswordGenerator(), "password_generator"));
-        cardPasswordVault.setOnClickListener(v -> showComingSoon("Password Vault"));
-        cardEmergencySos.setOnClickListener(v -> showComingSoon("Emergency SOS"));
+        cardPasswordVault.setOnClickListener(v ->
+                ((Dashboard) requireActivity()).openFragment(new Fragment_PasswordVault(), "password_vault"));
+        cardEmergencySos.setOnClickListener(v ->
+                ((Dashboard) requireActivity()).openFragment(new Fragment_EmergencySos(), "emergency_sos"));
     }
 
     private void showComingSoon(String tool) {

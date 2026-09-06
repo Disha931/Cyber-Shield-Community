@@ -77,6 +77,9 @@ public class Fragment_Community extends Fragment {
         cardSubmitPost.setOnClickListener(v -> submitPost());
 
         attachFeedListener();
+        CardView cardViewLeaderboard = view.findViewById(R.id.cardViewLeaderboard);
+        cardViewLeaderboard.setOnClickListener(v ->
+                ((Dashboard) requireActivity()).openFragment(new Fragment_Leaderboard(), "leaderboard"));
     }
 
     private void loadCurrentUserName() {
@@ -203,8 +206,10 @@ public class Fragment_Community extends Fragment {
 
         llLike.setOnClickListener(v -> toggleLike(postId, post));
 
+        // 🔵 CHANGED — Toast ki jagah ab real comment thread khulta hai
         llComment.setOnClickListener(v ->
-                Toast.makeText(getContext(), "Comments coming soon", Toast.LENGTH_SHORT).show());
+                ((Dashboard) requireActivity()).openFragment(
+                        Fragment_PostComments.newInstance(postId), "post_comments"));
 
         llCommunityFeed.addView(row);
     }

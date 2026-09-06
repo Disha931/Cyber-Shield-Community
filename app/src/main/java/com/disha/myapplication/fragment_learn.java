@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.AlertDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -38,6 +38,8 @@ public class fragment_learn extends Fragment {
     private final Map<String, Boolean> progressMap = new HashMap<>();
 
     private DatabaseReference progressRef;
+    private boolean alreadyCertified = false;
+    private DatabaseReference certificateRef;
 
     @Nullable
     @Override
@@ -80,12 +82,15 @@ public class fragment_learn extends Fragment {
 
         setupFirebaseRef();
         loadProgress();
+        loadCertificateStatus();
     }
 
     private void setupFirebaseRef() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             progressRef = null;
+            certificateRef = null; // 🔵 NEW
+
             return;
         }
         String uid = currentUser.getUid();
@@ -93,6 +98,26 @@ public class fragment_learn extends Fragment {
                 .getReference("Users")
                 .child(uid)
                 .child("learningProgress");
+        certificateRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(uid)
+                .child("certificate");
+    }
+    private void loadCertificateStatus() {
+        if (certificateRef == null) return;
+
+        certificateRef.child("earned").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean earned = snapshot.getValue(Boolean.class);
+                alreadyCertified = Boolean.TRUE.equals(earned);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // fail safely — leave alreadyCertified as false
+            }
+        });
     }
 
     private void loadProgress() {
@@ -157,5 +182,23 @@ public class fragment_learn extends Fragment {
             if (Boolean.TRUE.equals(done)) completed++;
         }
         tvLearnProgress.setText(completed + "/" + TOPIC_KEYS.length + " topics completed");
+        if (completed == TOPIC_KEYS.length && !alreadyCertified) {
+            awardCertificate();
+
+        }
+    }
+    private void awardCertificate() {
+        alreadyCertified = true; // set immediately so this never fires twice
+
+        if (certificateRef != null) {
+            certificateRef.child("earned").setValue(true);
+            certificateRef.child("dateEarned").setValue(System.currentTimeMillis());
+        }
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("🎉 Certificate Earned!")
+                .setMessage("You've completed all Cyber Awareness topics. View your certificate anytime from your Profile.")
+                .setPositiveButton("Nice!", null)
+                .show();
     }
 }
