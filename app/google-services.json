@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188269032588",
+    "project_id": "cybershield-community",
+    "storage_bucket": "cybershield-community.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188269032588:android:cb6842a393b3819c9df7a9",
+        "android_client_info": {
+          "package_name": "com.disha.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqu6reGKl05GbAkya8IOMQep0YX8HauLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
